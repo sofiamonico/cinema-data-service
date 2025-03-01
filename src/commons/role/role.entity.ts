@@ -6,12 +6,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { IsEnum, IsNotEmpty } from 'class-validator';
-
-export enum RoleType {
-  ADMIN = 'admin',
-  USER = 'user',
-  SUPERADMIN = 'superadmin',
-}
+import { RoleType } from '../../constants/role.constants';
 
 @Entity()
 export class Role {
@@ -26,7 +21,7 @@ export class Role {
   })
   @IsNotEmpty()
   @IsEnum(RoleType)
-  name: RoleType;
+  slug: RoleType;
 
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt?: Date;
