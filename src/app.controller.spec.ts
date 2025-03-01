@@ -1,22 +1,29 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { INestApplication } from '@nestjs/common';
+import * as request from 'supertest';
 
-describe('AppController', () => {
-  let appController: AppController;
+describe('App Controller', () => {
+  let app: INestApplication;
 
-  beforeEach(async () => {
-    const app: TestingModule = await Test.createTestingModule({
+  beforeAll(async () => {
+    const module: TestingModule = await Test.createTestingModule({
       controllers: [AppController],
-      providers: [AppService],
     }).compile();
 
-    appController = app.get<AppController>(AppController);
+    app = module.createNestApplication();
+
+    await app.init();
   });
 
-  describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(appController.getHello()).toBe('Hello World!');
-    });
+  it('/GET /ping returns service is online', async () => {
+    const response: any = await request(app.getHttpServer()).get('/ping');
+
+    expect(response.statusCode).toBe(200);
+    expect(response.text).toEqual(expect.stringContaining('online'));
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });
