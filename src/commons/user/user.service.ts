@@ -21,8 +21,8 @@ export class UserService {
 
   /**
    * Create a new user
-   * @param user - The user to create
-   * @returns The created user
+   * @param createUserDto - The user to create
+   * @returns {Promise<User>} The created user
    */
   async create(createUserDto: CreateUserDto): Promise<User> {
     // Verify if the email already exists
@@ -45,7 +45,7 @@ export class UserService {
   /**
    * Find a user by their email
    * @param email - The email of the user
-   * @returns The user or null if not found
+   * @returns {Promise<User | null>} The user or null if not found
    */
   async findByEmail(email: string): Promise<User | null> {
     return this.userRepository.findOne({ where: { email } });
@@ -54,7 +54,7 @@ export class UserService {
   /**
    * Find a user by their id
    * @param id - The id of the user
-   * @returns The user or null if not found
+   * @returns {Promise<User | null>}  The user or null if not found
    */
   async findById(id: number): Promise<User | null> {
     return this.userRepository.findOne({ where: { id } });
@@ -64,7 +64,7 @@ export class UserService {
    * Update a user's role
    * @param userId - The id of the user
    * @param roleIds - The ids of the roles
-   * @returns The updated user
+   * @returns {Promise<User>} The updated user
    */
   async updateRolesByEmail(email: string, roleSlug: RoleType): Promise<User> {
     const user = await this.findByEmail(email);
@@ -85,7 +85,7 @@ export class UserService {
   /**
    * Remove a user
    * @param id - The id of the user
-   * @returns The removed user
+   * @returns {Promise<void>} The removed user
    */
   async remove(id: number): Promise<void> {
     await this.userRepository.delete(id);
@@ -95,7 +95,7 @@ export class UserService {
    * Delete a user's role
    * @param email - The email of the user
    * @param roleSlug - The slug of the role
-   * @returns The updated user
+   * @returns {Promise<User>} The updated user
    */
   async deleteUserRoleByEmail(
     email: string,

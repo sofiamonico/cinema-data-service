@@ -49,19 +49,19 @@ export class Film {
   release_date: string;
 
   @IsOptional()
-  @Column('text', { array: true })
+  @Column('text', { array: true, nullable: true })
   @IsArray()
   @IsString({ each: true })
   species?: string[];
 
   @IsOptional()
-  @Column('text', { array: true })
+  @Column('text', { array: true, nullable: true })
   @IsArray()
   @IsString({ each: true })
   starships?: string[];
 
   @IsOptional()
-  @Column('text', { array: true })
+  @Column('text', { array: true, nullable: true })
   @IsArray()
   @IsString({ each: true })
   vehicles?: string[];
@@ -72,7 +72,7 @@ export class Film {
   characters: string[];
 
   @IsOptional()
-  @Column('text', { array: true })
+  @Column('text', { array: true, nullable: true })
   @IsArray()
   @IsString({ each: true })
   planets?: string[];

@@ -13,7 +13,7 @@ export class RoleService {
   /**
    * Create a new role
    * @param slug - The slug of the role
-   * @returns The created role
+   * @returns {Promise<Role>} The created role
    */
   async create(slug: RoleType): Promise<Role> {
     return this.roleRepository.save({ slug });
@@ -21,7 +21,7 @@ export class RoleService {
 
   /**
    * Get all roles
-   * @returns An array of roles
+   * @returns {Promise<Role[]>} An array of roles
    */
   async findAll(): Promise<Role[]> {
     return this.roleRepository.find();
@@ -30,7 +30,7 @@ export class RoleService {
   /**
    * Get a role by its slug
    * @param slug - The slug of the role
-   * @returns The role
+   * @returns {Promise<Role>} The role
    */
   async findBySlug(slug: RoleType): Promise<Role> {
     const role = await this.roleRepository.findOne({ where: { slug } });

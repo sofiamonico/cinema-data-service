@@ -11,7 +11,7 @@ export class SwapiService {
 
   /**
    * Fetch all films from SWAPI
-   * @returns Array of films from the API
+   * @returns {Promise<Film[]>} Array of films from the API
    */
   async fetchFilms(): Promise<Film[]> {
     try {
