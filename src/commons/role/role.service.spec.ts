@@ -27,31 +27,35 @@ describe('RoleService', () => {
     expect(service).toBeDefined();
   });
 
-  it('should create all the permited roles', async () => {
-    await service.initializeRoles();
-    const roles = await service.findAll();
+  describe('initializeRoles', () => {
+    it('should create all the permited roles', async () => {
+      await service.initializeRoles();
+      const roles = await service.findAll();
 
-    expect(roles).toBeDefined();
-    expect(roles.length).toBe(3);
-    expect(roles.map((role) => role.slug)).toEqual([
-      RoleType.ADMIN,
-      RoleType.USER,
-      RoleType.SUPER_ADMIN,
-    ]);
+      expect(roles).toBeDefined();
+      expect(roles.length).toBe(3);
+      expect(roles.map((role) => role.slug)).toEqual([
+        RoleType.ADMIN,
+        RoleType.USER,
+        RoleType.SUPER_ADMIN,
+      ]);
+    });
   });
-
-  it('should find a role by name', async () => {
-    await service.initializeRoles();
-    const role = await service.findBySlug(RoleType.ADMIN);
-    expect(role).toBeDefined();
-    expect(role.slug).toBe(RoleType.ADMIN);
+  describe('findBySlug', () => {
+    it('should find a role by name', async () => {
+      await service.initializeRoles();
+      const role = await service.findBySlug(RoleType.ADMIN);
+      expect(role).toBeDefined();
+      expect(role.slug).toBe(RoleType.ADMIN);
+    });
   });
-
-  it('should delete all the roles', async () => {
-    await service.initializeRoles();
-    await service.removeAll();
-    const roles = await service.findAll();
-    expect(roles).toBeDefined();
-    expect(roles.length).toBe(0);
+  describe('removeAll', () => {
+    it('should delete all the roles', async () => {
+      await service.initializeRoles();
+      await service.removeAll();
+      const roles = await service.findAll();
+      expect(roles).toBeDefined();
+      expect(roles.length).toBe(0);
+    });
   });
 });

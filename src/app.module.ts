@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { RoleModule } from './commons/role/role.module';
 import { UserModule } from './commons/user/user.module';
 import { FilmModule } from './commons/film/film.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -21,13 +22,14 @@ import { FilmModule } from './commons/film/film.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
-        synchronize: true, // Establecer en false para producción
+        synchronize: configService.get('ENV') === 'development',
       }),
       inject: [ConfigService],
     }),
     RoleModule,
     UserModule,
     FilmModule,
+    AuthModule,
   ],
   controllers: [AppController],
 })
