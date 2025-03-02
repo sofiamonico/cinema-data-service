@@ -2,6 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
+import { RoleModule } from './commons/role/role.module';
+import { UserModule } from './commons/user/user.module';
+import { FilmModule } from './commons/film/film.module';
 
 @Module({
   imports: [
@@ -22,6 +25,9 @@ import { AppController } from './app.controller';
       }),
       inject: [ConfigService],
     }),
+    RoleModule,
+    UserModule,
+    FilmModule,
   ],
   controllers: [AppController],
 })

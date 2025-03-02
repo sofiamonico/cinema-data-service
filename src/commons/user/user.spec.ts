@@ -1,10 +1,11 @@
 import { validate } from 'class-validator';
-import { Role, RoleType } from '../role/role.entity';
+import { Role } from '../role/role.entity';
 import { User } from './user.entity';
+import { RoleType } from '../../constants/role.constants';
 
 describe('User entity', () => {
   const role = new Role();
-  role.name = RoleType.ADMIN;
+  role.slug = RoleType.ADMIN;
   it('should be defined', () => {
     expect(new User()).toBeDefined();
   });
