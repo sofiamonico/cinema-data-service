@@ -1,7 +1,7 @@
 import { validate } from 'class-validator';
 import { Role } from '../role/role.entity';
 import { User } from './user.entity';
-import { RoleType } from '../../constants/role.constants';
+import { RoleType } from '../constants/role.constants';
 
 describe('User entity', () => {
   const role = new Role();

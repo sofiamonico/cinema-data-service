@@ -1,9 +1,9 @@
 import { SwapiService } from './swapi.service';
-import { BaseTestingModule } from '../../../test/testing.module';
+import { BaseTestingModule } from '../../test/testing.module';
 import { FilmModule } from '../film.module';
 import { HttpModule, HttpService } from '@nestjs/axios';
 import { of, throwError } from 'rxjs';
-import { mockFilmResponse } from '../../../fixtures/swapi.fixture';
+import { mockFilmResponse } from '../../fixtures/swapi.fixture';
 
 describe('SwapiService', () => {
   let testingModule: BaseTestingModule;

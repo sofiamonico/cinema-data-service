@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { RoleModule } from './commons/role/role.module';
-import { UserModule } from './commons/user/user.module';
-import { FilmModule } from './commons/film/film.module';
+import { RoleModule } from './role/role.module';
+import { UserModule } from './user/user.module';
+import { FilmModule } from './film/film.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({

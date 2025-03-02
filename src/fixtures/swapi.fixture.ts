@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Film } from '../commons/film/film.entity';
+import { Film } from '../film/film.entity';
 
 export const mockFilmResponse: AxiosResponse = {
   data: {

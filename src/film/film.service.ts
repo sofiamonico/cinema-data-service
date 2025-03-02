@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Film } from './film.entity';
 import { SwapiService } from './services/swapi.service';
+import { FilmDto } from '../dto/film/film.dto';
 
 @Injectable()
 export class FilmService {
@@ -26,17 +27,8 @@ export class FilmService {
    * @param film - The film to create
    * @returns {Promise<Film>} The created film
    */
-  async create(film: Film): Promise<Film> {
+  async create(film: FilmDto): Promise<Film> {
     return this.filmRepository.save(film);
-  }
-
-  /**
-   * Find one film by title
-   * @param title - The title of the film
-   * @returns {Promise<Film | null>} The film
-   */
-  async findOneByTitle(title: string): Promise<Film | null> {
-    return this.filmRepository.findOne({ where: { title } });
   }
 
   /**
@@ -98,10 +90,11 @@ export class FilmService {
   /**
    * Remove one film
    * @param id - The id of the film
-   * @returns {Promise<void>} The removed film
+   * @returns {Promise<boolean>} The removed film
    */
-  async removeOne(id: number): Promise<void> {
+  async removeOne(id: number): Promise<boolean> {
     await this.filmRepository.delete(id);
+    return true;
   }
 
   /**

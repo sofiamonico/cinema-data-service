@@ -6,9 +6,9 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './user.entity';
-import { CreateUserDto } from '../../dto/create-user.dto';
+import { CreateUserDto } from '../dto/user/create-user.dto';
 import * as bcrypt from 'bcryptjs';
-import { RoleType } from '../../constants/role.constants';
+import { RoleType } from '../constants/role.constants';
 import { RoleService } from '../role/role.service';
 
 @Injectable()
@@ -24,7 +24,7 @@ export class UserService {
    * @param createUserDto - The user to create
    * @returns {Promise<User>} The created user
    */
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<boolean> {
     // Verify if the email already exists
     const existingUser = await this.findByEmail(createUserDto.email);
     if (existingUser) {
@@ -39,7 +39,9 @@ export class UserService {
     user.email = createUserDto.email;
     user.password = hashedPassword;
     user.roles = [await this.roleService.findBySlug(RoleType.USER)];
-    return this.userRepository.save(user);
+    await this.userRepository.save(user);
+
+    return true;
   }
 
   /**
@@ -66,7 +68,7 @@ export class UserService {
    * @param roleIds - The ids of the roles
    * @returns {Promise<User>} The updated user
    */
-  async updateRolesByEmail(email: string, roleSlug: RoleType): Promise<User> {
+  async updateRoleByEmail(email: string, roleSlug: RoleType): Promise<User> {
     const user = await this.findByEmail(email);
     if (!user) {
       throw new NotFoundException('User not found');
@@ -85,10 +87,11 @@ export class UserService {
   /**
    * Remove a user
    * @param id - The id of the user
-   * @returns {Promise<void>} The removed user
+   * @returns true if the user is deleted
    */
-  async remove(id: number): Promise<void> {
+  async remove(id: number): Promise<boolean> {
     await this.userRepository.delete(id);
+    return true;
   }
 
   /**

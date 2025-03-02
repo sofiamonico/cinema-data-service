@@ -1,7 +1,7 @@
 import { Role } from './role.entity';
-import { RoleType } from '../../constants/role.constants';
+import { RoleType } from '../constants/role.constants';
 import { validate } from 'class-validator';
-import { BaseTestingModule } from '../../test/testing.module';
+import { BaseTestingModule } from '../test/testing.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { RoleService } from './role.service';
 

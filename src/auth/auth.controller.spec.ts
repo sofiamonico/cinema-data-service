@@ -1,6 +1,6 @@
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import { UserService } from '../commons/user/user.service';
+import { UserService } from '../user/user.service';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
 import {

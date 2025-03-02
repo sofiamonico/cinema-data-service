@@ -1,7 +1,7 @@
 import { AuthService } from './auth.service';
 import { AuthModule } from './auth.module';
 import { BaseTestingModule } from '../test/testing.module';
-import { UserService } from '../commons/user/user.service';
+import { UserService } from '../user/user.service';
 
 describe('AuthService', () => {
   let testingModule: BaseTestingModule;
@@ -31,11 +31,15 @@ describe('AuthService', () => {
   });
   describe('validateUser', () => {
     it('should validate user', async () => {
-      const user = await userService.create({
+      await userService.create({
         email: 'test@test.com',
         password: 'password',
       });
-      const result = await service.validateUser('test@test.com', 'password');
+      const user = await userService.findByEmail('test@test.com');
+      const result = await service.validateUser(
+        user?.email as string,
+        'password',
+      );
       expect(result).toEqual(user);
     });
     it('should not validate user', async () => {
@@ -48,11 +52,11 @@ describe('AuthService', () => {
   });
   describe('login', () => {
     it('should login', async () => {
-      const user = await userService.create({
+      await userService.create({
         email: 'test@test.com',
         password: 'password',
       });
-      const result = await service.login(user.email, 'password');
+      const result = await service.login('test@test.com', 'password');
       expect(result).toBeDefined();
       expect(result.accessToken).toBeDefined();
     });

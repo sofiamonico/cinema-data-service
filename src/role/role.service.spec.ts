@@ -1,7 +1,7 @@
 import { RoleService } from './role.service';
 import { RoleModule } from './role.module';
-import { BaseTestingModule } from '../../test/testing.module';
-import { RoleType } from '../../constants/role.constants';
+import { BaseTestingModule } from '../test/testing.module';
+import { RoleType } from '../constants/role.constants';
 
 describe('RoleService', () => {
   let testingModule: BaseTestingModule;

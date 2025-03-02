@@ -6,7 +6,7 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 import { IsEnum, IsNotEmpty } from 'class-validator';
-import { RoleType } from '../../constants/role.constants';
+import { RoleType } from '../constants/role.constants';
 
 @Entity()
 export class Role {

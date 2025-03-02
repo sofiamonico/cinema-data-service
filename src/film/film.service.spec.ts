@@ -1,12 +1,12 @@
 import { FilmService } from './film.service';
 import { FilmModule } from './film.module';
-import { BaseTestingModule } from '../../test/testing.module';
+import { BaseTestingModule } from '../test/testing.module';
 import { SwapiService } from './services/swapi.service';
 import {
   mockArrayFilms,
   mockArrayFilmsTitles,
   mockFilm,
-} from '../../fixtures/swapi.fixture';
+} from '../fixtures/swapi.fixture';
 
 describe('FilmService', () => {
   let testingModule: BaseTestingModule;
@@ -129,13 +129,6 @@ describe('FilmService', () => {
     it('should find one film by id', async () => {
       const film = await service.create(mockFilm);
       const foundFilm = await service.findOneById(film.id as number);
-      expect(foundFilm?.id).toEqual(film.id);
-    });
-  });
-  describe('findOneByTitle', () => {
-    it('should find one film by title', async () => {
-      const film = await service.create(mockFilm);
-      const foundFilm = await service.findOneByTitle(film.title as string);
       expect(foundFilm?.id).toEqual(film.id);
     });
   });
