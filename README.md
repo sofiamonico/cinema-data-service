@@ -23,11 +23,8 @@ Este servicio proporciona una API para gestionar datos relacionados con películ
 
 ### 3. Modifica las variables en el archivo `.env` según tus necesidades:
    ```
-   PORT=3000
    DB_USERNAME=postgres
    DB_PASSWORD=postgres
-   DB_DATABASE=cinema_db
-   ENV=development
    JWT_SECRET=tu_clave_secreta_aqui
    ```
 

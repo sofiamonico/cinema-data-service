@@ -15,8 +15,6 @@ const AppDataSource = new DataSource({
   database: process.env.DB_DATABASE,
   entities: [User, Role, Film],
   migrations: ['src/migrations/*.ts'],
-  synchronize: process.env.NODE_ENV === 'development',
-  migrationsRun: process.env.NODE_ENV === 'production',
 });
 
 export default AppDataSource;
