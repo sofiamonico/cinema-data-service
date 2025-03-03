@@ -62,6 +62,24 @@ $ docker exec cinema-data-service_api_1 npm run command -- create:user-super-adm
 ```bash
 $ docker exec cinema-data-service_api_1 npm run command -- sync:get-films-from-swapi
 ```
+## Ejecucion de los tests
+
+#### Ejecutar todos los tests
+
+```bash
+$ docker exec cinema-data-service_api_1 npm run test
+```
+
+#### Ejecutar tests unitarios
+
+```bash
+$ docker exec cinema-data-service_api_1 npm run test src/....
+```
+
+#### Ejecutar tests de integración
+```bash
+$ docker exec cinema-data-service_api_1 npm run test:integration
+```
 
 ## Endpoints de la API
 

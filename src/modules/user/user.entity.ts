@@ -46,7 +46,17 @@ export class User {
     type: [Role],
   })
   @ManyToMany(() => Role, { eager: true })
-  @JoinTable()
+  @JoinTable({
+    name: 'users_roles_role',
+    joinColumn: {
+      name: 'user_id',
+      referencedColumnName: 'id',
+    },
+    inverseJoinColumn: {
+      name: 'role_id',
+      referencedColumnName: 'id',
+    },
+  })
   roles: Role[];
 
   @ApiProperty({
