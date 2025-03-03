@@ -14,14 +14,14 @@ import { ApiProperty } from '@nestjs/swagger';
 @Entity('users')
 export class User {
   @ApiProperty({
-    description: 'Identificador único del usuario',
+    description: 'ID User',
     example: 1,
   })
   @PrimaryGeneratedColumn()
   id?: number;
 
   @ApiProperty({
-    description: 'Correo electrónico del usuario',
+    description: 'User email',
     example: 'usuario@ejemplo.com',
     uniqueItems: true,
   })
@@ -30,7 +30,7 @@ export class User {
   email: string;
 
   @ApiProperty({
-    description: 'Contraseña encriptada del usuario',
+    description: 'User password',
     example: '$2a$10$JwbmU1Y1cVSGv.7YE9UoM.1kRf2r7W4vx9YDv1Jz/nxcJ4iCZJOu2',
     minLength: 8,
     maxLength: 60,
@@ -42,7 +42,7 @@ export class User {
   password: string;
 
   @ApiProperty({
-    description: 'Roles asignados al usuario',
+    description: 'User roles',
     type: [Role],
   })
   @ManyToMany(() => Role, { eager: true })
@@ -60,14 +60,14 @@ export class User {
   roles: Role[];
 
   @ApiProperty({
-    description: 'Fecha de creación del usuario',
+    description: 'User created at',
     example: '2023-01-01T00:00:00Z',
   })
   @CreateDateColumn({ name: 'created_at', type: 'timestamp' })
   createdAt?: Date;
 
   @ApiProperty({
-    description: 'Fecha de última actualización del usuario',
+    description: 'User updated at',
     example: '2023-01-01T00:00:00Z',
   })
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp' })
