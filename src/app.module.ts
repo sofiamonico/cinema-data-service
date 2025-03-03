@@ -2,10 +2,12 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
-import { RoleModule } from './role/role.module';
-import { UserModule } from './user/user.module';
-import { FilmModule } from './film/film.module';
-import { AuthModule } from './auth/auth.module';
+import { RoleModule } from './modules/role/role.module';
+import { UserModule } from './modules/user/user.module';
+import { FilmModule } from './modules/film/film.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { CommandModule } from 'nestjs-command';
+import { GuardsModule } from './modules/auth/guards/guards.module';
 
 @Module({
   imports: [
@@ -22,10 +24,14 @@ import { AuthModule } from './auth/auth.module';
         password: configService.get('DB_PASSWORD'),
         database: configService.get('DB_DATABASE'),
         entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        migrations: [__dirname + '/../migrations/*{.ts,.js}'],
         synchronize: configService.get('ENV') === 'development',
+        migrationsRun: configService.get('ENV') === 'production',
       }),
       inject: [ConfigService],
     }),
+    CommandModule,
+    GuardsModule,
     RoleModule,
     UserModule,
     FilmModule,

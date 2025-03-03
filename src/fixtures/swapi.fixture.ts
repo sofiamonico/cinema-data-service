@@ -1,5 +1,5 @@
 import { AxiosResponse } from 'axios';
-import { Film } from '../film/film.entity';
+import { Film } from '../modules/film/film.entity';
 
 export const mockFilmResponse: AxiosResponse = {
   data: {
@@ -28,7 +28,7 @@ export const mockFilmResponse: AxiosResponse = {
   config: { headers: {} } as any,
 };
 
-export const mockArrayFilms: Film[] = [
+export const mockArrayFilms = [
   {
     title: 'A New Hope',
     episode_id: 4,
@@ -75,7 +75,7 @@ export const mockArrayFilms: Film[] = [
   },
 ];
 
-export const mockFilm: Film = {
+export const mockFilm = {
   title: 'A New Hope',
   episode_id: 4,
   opening_crawl: 'It is a period of civil war...',

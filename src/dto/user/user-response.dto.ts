@@ -1,6 +1,6 @@
 import { Expose } from 'class-transformer';
 import { IsArray, IsEmail, IsNotEmpty } from 'class-validator';
-import { Role } from '../../role/role.entity';
+import { Role } from '../../modules/role/role.entity';
 
 export class UserResponseDto {
   @Expose()
