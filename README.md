@@ -1,99 +1,80 @@
-## Description
+# Cinema Data Service
 
-- Summary: This service is focused on managing all films related operations like:
-  - Creating films.
-  - Validating films.
-  - Validating phone number.
-  - Changing personal data.
-  - Adding different types of addresses.
-  - Controling customers operations based on their onboarding step.
-   - Grating control to administrators over customers accounts.
+Este servicio proporciona una API para gestionar datos relacionados con películas, usuarios y roles en un sistema de cine.
 
-## Project setup
+## Requisitos previos
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/install/)
+- [Node.js](https://nodejs.org/) (opcional, para desarrollo local)
+
+## Levantar el proyecto con Docker
+
+### 1. Clona este repositorio:
+   ```bash
+   git clone git@github.com:sofiamonico/cinema-data-service.git
+   cd cinema-data-service
+   ```
+
+### 2. Crea un archivo `.env` basado en el ejemplo proporcionado:
+   ```bash
+   cp .env.example .env
+   ```
+
+### 3. Modifica las variables en el archivo `.env` según tus necesidades:
+   ```
+   PORT=3000
+   DB_USERNAME=postgres
+   DB_PASSWORD=postgres
+   DB_DATABASE=cinema_db
+   ENV=development
+   JWT_SECRET=tu_clave_secreta_aqui
+   ```
+
+### 4. Levanta el proyecto con Docker:
+
+  ```bash
+    docker-compose up --build
+  ```
+
+Este comando iniciará:
+- El servicio de API en el puerto especificado en `.env` (por defecto 3000)
+- Una base de datos PostgreSQL en el puerto 5432
+
+### 5. Correr migraciones
+
+> **IMPORTANTE**: Las migraciones deben ser ejecutadas antes de ejecutar cualquier comando CLI que dependa de la estructura de la base de datos.
+
+
+### Ejecutar migraciones
 
 ```bash
-$ npm install
+docker-compose exec api npm run migration:run
 ```
 
-## Compile and run the project
 
+### 6. Ejecutar comandos CLI
+
+
+#### Crear un usuario super admin
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Comandos CLI
-
-El proyecto incluye comandos CLI para realizar tareas administrativas como la creación de usuarios. A continuación se muestran ejemplos de cómo ejecutar estos comandos:
-
-### Ejecutar comandos en Docker
-
-```bash
-# Crear un usuario super admin
 $ docker exec cinema-data-service_api_1 npm run command -- create:user-super-admin --email="admin@example.com" --password="SecurePass123"
+```
 
-# Sincronizar películas desde la API de Star Wars
+#### Sincronizar películas con la API de Star Wars
+```bash
 $ docker exec cinema-data-service_api_1 npm run command -- sync:get-films-from-swapi
-
 ```
 
-> **Nota importante**: Asegúrate de incluir `--` después de `npm run command` para separar los argumentos de npm de los argumentos del comando.
+## Endpoints de la API
 
-## Run tests
+La documentación de la API está disponible en:
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+http://localhost:3000/docs
 ```
 
-## Deployment
+## Puertos utilizados
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+- **API**: Puerto especificado en `.env` (por defecto 3000)
+- **PostgreSQL**: 5432

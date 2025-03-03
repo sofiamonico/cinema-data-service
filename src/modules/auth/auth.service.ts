@@ -2,6 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserService } from '../user/user.service';
 import * as bcrypt from 'bcryptjs';
+import { Role } from '../role/role.entity';
 
 @Injectable()
 export class AuthService {
@@ -24,7 +25,11 @@ export class AuthService {
       throw new UnauthorizedException('Invalid credentials');
     }
 
-    const payload = { sub: user.id, email: user.email, role: user.role };
+    const payload = {
+      sub: user.id,
+      email: user.email,
+      roles: user.roles.map((role: Role) => role.slug),
+    };
     return {
       accessToken: this.jwtService.sign(payload),
     };

@@ -20,6 +20,7 @@ export class RolesGuard implements CanActivate {
       'roles',
       context.getHandler(),
     );
+
     if (!requiredRoles) {
       return true; //if no roles are required, allow access
     }
@@ -32,7 +33,6 @@ export class RolesGuard implements CanActivate {
         'You do not have permission to access this route',
       );
     }
-
     const hasRole = user.roles.some((role: string) =>
       requiredRoles.includes(role),
     );

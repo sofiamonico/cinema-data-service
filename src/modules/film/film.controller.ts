@@ -20,7 +20,18 @@ import { RolesGuard } from '../auth/guards/roles.guard';
 import { RoleType } from '../../constants/role.constants';
 import { plainToInstance } from 'class-transformer';
 import { UpdateFilmDto } from '../../dto/film/update-film.dto';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+  ApiExtraModels,
+} from '@nestjs/swagger';
 
+@ApiTags('Films')
+@ApiBearerAuth()
+@ApiExtraModels(FilmDto, FilmResponseDto, FilmTitlesDto, UpdateFilmDto)
 @Controller('film')
 export class FilmController {
   constructor(private readonly filmService: FilmService) {}
@@ -30,6 +41,21 @@ export class FilmController {
    * @param createFilmDto - The film to create
    * @returns {Promise<{ message: string; data: FilmDto; errors: string[] }>} The created film
    */
+  @ApiOperation({
+    summary: 'Create a film',
+    description: 'Create a new film in the database',
+  })
+  @ApiResponse({
+    status: 201,
+    description: 'Film created successfully',
+    type: FilmResponseDto,
+  })
+  @ApiResponse({ status: 400, description: 'Invalid input data' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Not enough permissions',
+  })
   @Post('/create')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.ADMIN, RoleType.SUPER_ADMIN)
@@ -48,6 +74,20 @@ export class FilmController {
    * Find all films
    * @returns {Promise<{ message: string; data: FilmDto[]; errors: string[] }>} Array of films
    */
+  @ApiOperation({
+    summary: 'Get all films',
+    description: 'Get a list of all films with their details',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Films fetched successfully',
+    type: [FilmResponseDto],
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Not enough permissions',
+  })
   @Get('/all')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.ADMIN, RoleType.USER, RoleType.SUPER_ADMIN)
@@ -68,6 +108,20 @@ export class FilmController {
    * Find all films titles
    * @returns {Promise<{ message: string; data: FilmTitlesDto[]; errors: string[] }>} Array of films titles
    */
+  @ApiOperation({
+    summary: 'Get all films titles',
+    description: 'Get a list of all films titles',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Films titles fetched successfully',
+    type: [FilmTitlesDto],
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Not enough permissions',
+  })
   @Get('/titles')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.ADMIN, RoleType.USER, RoleType.SUPER_ADMIN)
@@ -89,6 +143,22 @@ export class FilmController {
    * @param id - The id of the film
    * @returns {Promise<{ message: string; data: FilmResponseDto; errors: string[] }>} The film
    */
+  @ApiOperation({
+    summary: 'Get film by id',
+    description: 'Get the details of a specific film by its ID',
+  })
+  @ApiParam({ name: 'id', description: 'ID of the film', type: 'number' })
+  @ApiResponse({
+    status: 200,
+    description: 'Film fetched successfully',
+    type: FilmResponseDto,
+  })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({
+    status: 403,
+    description: 'Prohibido - No tiene permisos suficientes',
+  })
+  @ApiResponse({ status: 404, description: 'Film not found' })
   @Get('/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.USER)
@@ -111,6 +181,27 @@ export class FilmController {
    * @param updateFilmDto - The film to update
    * @returns {Promise<{ message: string; data: UpdateFilmDto; errors: string[] }>} The updated film
    */
+  @ApiOperation({
+    summary: 'Update film',
+    description: 'Update the data of an existing film',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID of the film to update',
+    type: 'number',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'Film updated successfully',
+    type: FilmResponseDto,
+  })
+  @ApiResponse({ status: 400, description: 'Invalid input data' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Not enough permissions',
+  })
+  @ApiResponse({ status: 404, description: 'Film not found' })
   @Patch('/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.ADMIN, RoleType.SUPER_ADMIN)
@@ -135,6 +226,22 @@ export class FilmController {
    * @param id - The id of the film
    * @returns {Promise<{ message: string; data: boolean; errors: string[] }>} The deleted film
    */
+  @ApiOperation({
+    summary: 'Delete film',
+    description: 'Delete an existing film by its ID',
+  })
+  @ApiParam({
+    name: 'id',
+    description: 'ID of the film to delete',
+    type: 'number',
+  })
+  @ApiResponse({ status: 200, description: 'Film deleted successfully' })
+  @ApiResponse({ status: 401, description: 'Unauthorized' })
+  @ApiResponse({
+    status: 403,
+    description: 'Forbidden - Not enough permissions',
+  })
+  @ApiResponse({ status: 404, description: 'Film not found' })
   @Delete('/:id')
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(RoleType.ADMIN, RoleType.SUPER_ADMIN)
